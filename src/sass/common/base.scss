@@ -1,0 +1,7 @@
+@import './variables.scss';
+
+body {
+  font: 16px/20px helvetica, arial, sans-serif;
+  color: $textColor;
+  background: $bg;
+}
