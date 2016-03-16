@@ -22,11 +22,11 @@ class Rate extends React.Component {
         return <li className="rate">
             <span className="rate__currency">{Rate.symbols[this.props.currency]}</span>
             <div className="rate__type">
-                <Link to={`/auction/${this.props.currency}/buy`} className="rate__button">Купить</Link>
+                <Link to={`/auction/${this.props.currency}/buy`} className="rate__button">Продать</Link>
                 <strong className="rate__val">{this.formatVal(this.props.data.buy)}</strong>
             </div>
             <div className="rate__type">
-                <Link to={`/auction/${this.props.currency}/sell`} className="rate__button" className="rate__button">Продать</Link>
+                <Link to={`/auction/${this.props.currency}/sell`} className="rate__button" className="rate__button">Купить</Link>
                 <strong className="rate__val">{this.formatVal(this.props.data.sell)}</strong>
             </div>
         </li>;

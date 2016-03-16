@@ -31,6 +31,9 @@ module.exports = {
   entry: {
     main: entrySources()
   },
+  devServer: {
+    historyApiFallback: true
+  },
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, build),
