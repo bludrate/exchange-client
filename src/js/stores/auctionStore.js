@@ -22,14 +22,21 @@ var RatesStore = Object.assign({}, EventEmitter.prototype, {
       _timeout = setTimeout(this.init.bind(this), 500);
     });
   },
+
   stop: function() {
     clearTimeout(_timeout);
   },
+
   fetchRates() {
     return fetch(appConstants.URLS.SERVER + '/rates?city=' + CityStore.getCurrentCity()).then((res) => res.json());
   },
+
   getRates: function() {
     return _rates;
+  },
+
+  fetchPhone: function(id) {
+    return fetch(appConstants.URLS.SERVER + '/number?userId=' + id).then((res) => res.text());
   },
 
   emitChange: function() {

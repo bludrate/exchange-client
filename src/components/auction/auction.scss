@@ -1,0 +1,110 @@
+@import "variables";
+
+.auction {
+  padding: 32px 0 0;
+
+  &__call {
+    display: block;
+    background: green;
+    height: 36px;
+    color: white;
+    line-height: 36px;
+    text-align: center;
+    margin-top: 7px;
+    border-radius: 4px;
+    text-decoration: none;
+
+    .icon-phone {
+      margin-right: 10px;
+      font-size: 16px;
+      display: inline-block;
+      margin-top: 9px;
+      vertical-align: top;
+    }
+  }
+  &__data {
+    float: right;
+    margin-left: 8px;
+    width: 160px;
+  }
+
+  &__time {
+    float: right;
+    width: 36px;
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    margin-left: 8px;
+    line-height: 14px;
+
+    .auction-list & {
+      background: #9a9a9a;
+      color: white;
+      padding: 2px;
+    }
+
+    &.icon-clock {
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+
+  &__price {
+    font-size: 12px;
+  }
+  
+  &__rate {
+    width: 50px;
+    margin-left: 7px;
+    float: right;
+
+    .auction-list & {
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
+  &__message {
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 14px;
+  }
+  &__sum {
+    margin-right: 5px;
+    display: block;
+
+    &-value {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+  }
+  &-head {
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 6px 10px;
+    background: $gray;
+    overflow: hidden;
+    box-shadow: 1px 0 0;
+    position: fixed;
+  }
+
+  &-list {
+    height: 100%;
+    overflow: auto;
+  }
+
+  &__item {
+    overflow: hidden;
+    padding: 10px;
+    
+    &:nth-child(2n) {
+      background: #e2e2e2;
+    }
+  }
+}

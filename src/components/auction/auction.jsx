@@ -2,6 +2,9 @@ import React from 'react';
 import CityStore from '../../js/stores/cityStore';
 import appConstants from '../../js/constants/appConstants';
 import AuctionItem from '../auction-item/auction-item.jsx';
+import AuctionHead from '../auction-head/auction-head.jsx';
+
+import './auction.scss';
 
 class Auction extends React.Component {
     constructor(props) {
@@ -53,16 +56,19 @@ class Auction extends React.Component {
 
     renderItems() {
         if (!this.state.list.length) {
-            return 'loading or empty';
+            return <div>'loading or empty'</div>;
         }
 
         return this.state.list.map((item, index) => <AuctionItem key={index} data={item}/>)
     }
 
     render() {
-        return <div className="auction">
-            {this.renderItems()}
-        </div>;
+        return <section className="auction">
+            <AuctionHead/>
+            <ul className="auction-list">
+                {this.renderItems()}
+            </ul>
+        </section>;
     }
 }
 

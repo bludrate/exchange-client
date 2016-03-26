@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const src = './src';
 const build = './build';
@@ -32,18 +33,25 @@ module.exports = {
     main: entrySources()
   },
   devServer: {
+    host: '0.0.0.0',
+    port: 3000,
     historyApiFallback: true
   },
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, build),
-    publicPath: 'http://localhost:3000/build'
+    filename: '/js/main.js',
+    path: path.resolve(__dirname, build)
   },
   plugins: [
-    new ExtractTextPlugin('main.css')
+    new ExtractTextPlugin('css/main.css', {
+      allChunks: true
+    }),
+    new HtmlWebpackPlugin({
+      template: src + '/index.html',
+      inject: 'head'
+    })
   ],
   sassLoader: {
-    includePaths: [path.resolve(__dirname, src)]
+    includePaths: [path.resolve(__dirname, src), path.resolve(__dirname, src + '/sass/common/')]
   },
   module: {
     loaders: [
@@ -56,6 +64,11 @@ module.exports = {
         test: /\.scss$/,
         exclude: /node_modules/,
         loader: stylesLoader()
+      },
+      {
+        test: /fonts\/*/,
+        exclude: /node_modules/,
+        loader: 'file-loader?name=/fonts/[name].[ext]'
       }
     ]
   }

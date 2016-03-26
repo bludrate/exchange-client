@@ -1,5 +1,6 @@
 import React from 'react'; // import react
 import ReactDOM from 'react-dom';
+import fetch from 'whatwg-fetch';
 import {browserHistory, Router, Route, Link, IndexRoute} from 'react-router';
 import Main from './components/main/main.jsx';
 import Rates from './components/rates/rates.jsx';
