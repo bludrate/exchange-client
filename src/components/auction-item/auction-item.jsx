@@ -37,6 +37,7 @@ class AuctionItem extends React.Component {
   }
 
   getPhone(event) {
+    ga('send', 'event', 'getPhone', this.props.data.phone.bid);
     var link = event.currentTarget;
     if (this.phone) return ;
     AuctionStore.fetchPhone(this.props.data.phone.bid).then((numberPart) => {
