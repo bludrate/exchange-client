@@ -1,8 +1,6 @@
 @import "variables";
 
 .auction {
-  padding: 32px 0 0;
-
   &__call {
     display: block;
     background: green;
@@ -57,7 +55,6 @@
   
   &__rate {
     width: 50px;
-    margin-left: 7px;
     float: right;
 
     .auction-list & {
@@ -84,19 +81,13 @@
     }
   }
   &-head {
-    top: 0;
-    left: 0;
-    right: 0;
     padding: 6px 10px;
     background: $gray;
     overflow: hidden;
-    box-shadow: 1px 0 0;
-    position: fixed;
-  }
 
-  &-list {
-    height: 100%;
-    overflow: auto;
+    i {
+      border-bottom: 1px dashed;
+    }
   }
 
   &__item {
@@ -105,6 +96,11 @@
     
     &:nth-child(2n) {
       background: #e2e2e2;
+    }
+
+    sup {
+      font-weight: normal;
+      font-size: 12px;
     }
   }
 }

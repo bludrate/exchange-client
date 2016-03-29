@@ -1,0 +1,30 @@
+.header {
+  height: 35px;
+  line-height: 35px;
+  background: black;
+  color: white;
+  overflow: hidden;
+}
+
+.logo {
+  font: 16px/35px Georgia, helvetica, arial, sans-serif;
+  float: left;
+  text-decoration: none;
+  color: white;
+  padding-left: 10px;
+
+  &__ico {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 30px;
+    margin-right: 5px;
+    font-family: Helvetica, arial, sans-serif;
+  }
+
+  /*&__arrows {
+    margin: 0 3px 0 -3px;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: top;
+  }*/
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import CityStore from '../../js/stores/cityStore';
+import AuctionStore from '../../js/stores/auctionStore';
 import appConstants from '../../js/constants/appConstants';
 import AuctionItem from '../auction-item/auction-item.jsx';
 import AuctionHead from '../auction-head/auction-head.jsx';
@@ -13,58 +13,70 @@ class Auction extends React.Component {
         this.refreshDelay = 2 * 60 * 1000; //every 2 minutes
 
         this.state = {
-            list: []
+            sort: {}
         };
+
+        this.bindListeners();
+    }
+
+    bindListeners() {
+        this.onAuctionUpdate = () => {
+            this.forceUpdate()
+        };
+        AuctionStore.addChangeListener(this.onAuctionUpdate);
     }
 
     componentDidMount() {
-        this.init();
+        AuctionStore.init(this.props.params.currency, this.props.params.type);
     }
 
     componentWillUnmount() {
-        clearTimeout(this.timeout);
+        AuctionStore.stop();
+        AuctionStore.removeChangeListener(this.onAuctionUpdate);
     }
 
-    init() {
-        this.getAuctionData(CityStore.getCurrentCity(), this.props.params.currency, this.props.params.type).then((list) => {
-            this.setState({
-                list: list
-            });
-
-            this.timeout = setTimeout(this.init.bind(this), this.refreshDelay);
-        }, (err) => {
-            console.error(err);
-            this.timeout = setTimeout(this.init.bind(this), 500);
+    onSort(data) {
+        this.setState({
+            sort: data
         });
     }
 
-    getAuctionData() {
-        var data = {
-            city: CityStore.getCurrentCity(),
-            currency: this.props.params.currency,
-            type: this.props.params.type
-        };
+    sortData(list) {
+        var sortData = this.state.sort;
 
-        var query = [];
-
-        for (let key in data) {
-            query.push( key + '=' + data[key] );
+        if (!sortData.head) {
+            return list;
         }
 
-        return fetch(appConstants.URLS.SERVER + '/auction?' + query.join('&') ).then((res) => res.json());
+        if (sortData.head === 'time') {
+            if (sortData.value) {
+                list.reverse();
+            }
+        } else {
+            list.sort(function(a, b) {
+                if (sortData.value) {
+                    return b[sortData.head] - a[sortData.head];
+                } else {
+                    return a[sortData.head] - b[sortData.head];
+                }
+            });
+        }
+
+        return list;
     }
 
     renderItems() {
-        if (!this.state.list.length) {
+        var list = AuctionStore.getData().slice();
+        if (!list.length) {
             return <div>'loading or empty'</div>;
         }
 
-        return this.state.list.map((item, index) => <AuctionItem key={index} data={item}/>)
+        return this.sortData(list).map((item, index) => <AuctionItem currency={this.props.params.currency} key={index} data={item}/>)
     }
 
     render() {
         return <section className="auction">
-            <AuctionHead/>
+            <AuctionHead onSort={this.onSort.bind(this)}/>
             <ul className="auction-list">
                 {this.renderItems()}
             </ul>

@@ -5,11 +5,35 @@ class AuctionItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.messageSlice = 100;
+    this.currencies = {
+      rub: '₽',
+      eur: '€',
+      usd: '$'
+    };
+    this.init();
+  }
 
-    this.state = {
-      messageSlice: this.messageSlice
+  init() {
+    var sum = this.props.data.sum;
+    var postfix;
+
+    if ( sum >= 1000000 ) {
+      sum = Math.ceil(sum/1000000);
+      postfix = <sup>млн.</sup>;
     }
+
+    if ( sum >= 1000 ) {
+      sum = Math.ceil(sum/1000);
+      postfix = <sup>тыс.</sup>;
+    }
+
+    this.postfix = postfix;
+    this.sum = sum;
+    this.currency = this.currencies[this.props.currency];
+  }
+
+  componentWillReceiveProps() {
+    this.init();
   }
 
   getPhone(event) {
@@ -32,19 +56,6 @@ class AuctionItem extends React.Component {
     event.preventDefault();
   }
 
-  message(message) {
-    if (!this.state.messageSlice || message.length <= this.state.messageSlice) {
-      return message;
-    } else {
-      return message.slice(0, this.state.messageSlice) + '...';
-    }
-  }
-
-  toggleMessage() {
-    this.setState({
-      messageSlice: this.state.messageSlice ? undefined : this.messageSlice
-    });
-  }
 //{JSON.stringify(this.props)}
   render() {
     return <li className="auction__item">
@@ -52,12 +63,12 @@ class AuctionItem extends React.Component {
         <span className="auction__time">{this.props.data.time}</span>
         <span className="auction__rate">{this.props.data.rate}</span>
         <div className="auction__sum">
-          <strong className="auction__sum-value">{this.props.data.sum}$</strong>
+          <strong className="auction__sum-value">{this.sum}{this.postfix}{this.currency}</strong>
           <span className="auction__price">{Math.round(this.props.data.sum * this.props.data.rate)}грн</span>
         </div>
         <a className="auction__call" onClick={this.getPhone.bind(this)}><i className="icon-phone"></i>{this.props.data.phone.number}</a>
       </div>
-      <div className="auction__message" onClick={this.toggleMessage.bind(this)}>{this.message(this.props.data.message)}</div>
+      <div className="auction__message">{this.props.data.message}</div>
     </li>;
   }
 }

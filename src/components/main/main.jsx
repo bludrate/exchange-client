@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../header/header.jsx';
 
 class Main extends React.Component {
     constructor(props) {
@@ -7,6 +8,7 @@ class Main extends React.Component {
 
     render() {
         return <div>
+            <Header />
             {this.props.children}
         </div>;
     }

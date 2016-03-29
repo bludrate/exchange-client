@@ -6,20 +6,20 @@ import CityStore from './cityStore';
 
 var CHANGE_EVENT = 'change';
 
-var _rates;
+var _auction = [];
 var _timeout;
 
-var RatesStore = Object.assign({}, EventEmitter.prototype, {
-  init: function() {
-    this.fetchRates().then((rates) => {
-      _rates = rates;
+var AuctionStore = Object.assign({}, EventEmitter.prototype, {
+  init: function(currency, type) {
+    this.fetchAuction(currency, type).then((auctionList) => {
+      _auction = auctionList;
 
       this.emitChange(CHANGE_EVENT);
 
-      _timeout = setTimeout(this.init.bind(this), this.refreshDelay);
+      _timeout = setTimeout(this.init.bind(this, currency, type), appConstants.RATES_REFRESH);
     }, (err) => {
       console.error(err);
-      _timeout = setTimeout(this.init.bind(this), 500);
+      _timeout = setTimeout(this.init.bind(this, currency, type), 500);
     });
   },
 
@@ -27,16 +27,28 @@ var RatesStore = Object.assign({}, EventEmitter.prototype, {
     clearTimeout(_timeout);
   },
 
-  fetchRates() {
-    return fetch(appConstants.URLS.SERVER + '/rates?city=' + CityStore.getCurrentCity()).then((res) => res.json());
-  },
-
-  getRates: function() {
-    return _rates;
-  },
-
-  fetchPhone: function(id) {
+  fetchPhone(id) {
     return fetch(appConstants.URLS.SERVER + '/number?userId=' + id).then((res) => res.text());
+  },
+
+  fetchAuction(currency, type) {
+    var data = {
+      city: CityStore.getCurrentCity(),
+      currency: currency,
+      type: type
+    };
+
+    var query = [];
+
+    for (let key in data) {
+      query.push( key + '=' + data[key] );
+    }
+
+    return fetch(appConstants.URLS.SERVER + '/auction?' + query.join('&') ).then((res) => res.json());
+  },
+
+  getData: function() {
+    return _auction;
   },
 
   emitChange: function() {
@@ -58,4 +70,4 @@ var RatesStore = Object.assign({}, EventEmitter.prototype, {
   }
 });
 
-export default RatesStore;
+export default AuctionStore;
