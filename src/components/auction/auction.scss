@@ -99,6 +99,9 @@
     }
 
     sup {
+      display: inline-block;
+      vertical-align: top;
+      margin: 2px 0 -2px;
       font-weight: normal;
       font-size: 12px;
     }

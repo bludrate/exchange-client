@@ -1,11 +1,14 @@
 import React from 'react'; // import react
 import ReactDOM from 'react-dom';
 import fetch from 'whatwg-fetch';
-import {hashHistory, Router, Route, Link, IndexRoute} from 'react-router';
+import {useRouterHistory, Router, Route, Link, IndexRoute} from 'react-router';
+import { createHashHistory } from 'history'
 import Main from './components/main/main.jsx';
 import Rates from './components/rates/rates.jsx';
 import Auction from './components/auction/auction.jsx';
 import FastClick from './js/vendor/fastclick';
+
+let appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
 import './sass/main.scss';
 
@@ -16,7 +19,7 @@ FastClick.attach( document.body, {
 
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-      <Router history={hashHistory}>
+      <Router history={appHistory}>
         <Route path="/" component={Main} >
           <IndexRoute component={Rates}/>
           <Route path="auction/:currency/:type" component={Auction}/>
