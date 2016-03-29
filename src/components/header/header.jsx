@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link, Route } from 'react-router';
+import { Route } from 'react-router';
+import Link from '../link/link.jsx';
 
 import './header.scss';
 
@@ -16,7 +17,7 @@ class Header extends React.Component {
 
   render() {
     return <div className="header tabs">
-      <Link to="/" className="logo"><i className="logo__ico">₴</i>валютная биржа</Link>
+      <Link to="/" className="logo" source="logo"><i className="logo__ico">₴</i>валютная биржа</Link>
     </div>;
   }
   /*<i className="logo__arrows">⇅</i>*/

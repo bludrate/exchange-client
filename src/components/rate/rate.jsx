@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import Link from '../link/link.jsx';
 
 class Rate extends React.Component {
     constructor(props) {
@@ -22,11 +22,11 @@ class Rate extends React.Component {
         return <li className="rate">
             <span className="rate__currency">{Rate.symbols[this.props.currency]}</span>
             <div className="rate__type">
-                <Link to={`/auction/${this.props.currency}/buy`} className="rate__button">Покупают</Link>
+                <Link to={`/auction/${this.props.currency}/buy`} source={`Rate(/auction/${this.props.currency}/buy)`} className="rate__button">Покупают</Link>
                 <strong className="rate__val">{this.formatVal(this.props.data.buy)}</strong>
             </div>
             <div className="rate__type">
-                <Link to={`/auction/${this.props.currency}/sell`} className="rate__button" className="rate__button">Продают</Link>
+                <Link to={`/auction/${this.props.currency}/sell`} className="rate__button" className="rate__button" source={`Rate(/auction/${this.props.currency}/sell)`}>Продают</Link>
                 <strong className="rate__val">{this.formatVal(this.props.data.sell)}</strong>
             </div>
         </li>;
