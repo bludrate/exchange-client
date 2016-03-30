@@ -12,12 +12,12 @@ let appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
 import './sass/main.scss';
 
-FastClick.attach( document.body, {
-  tapDelay: 1,
-  tapTimeout: 500
-} );
-
 document.addEventListener('DOMContentLoaded', function() {
+  FastClick.attach( document.body, {
+    tapDelay: 1,
+    tapTimeout: 500
+  } );
+
   ReactDOM.render(
       <Router history={appHistory}>
         <Route path="/" component={Main} >
