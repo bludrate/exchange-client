@@ -7,7 +7,7 @@ import Main from './components/main/main.jsx';
 import Rates from './components/rates/rates.jsx';
 import Auction from './components/auction/auction.jsx';
 import FastClick from './js/vendor/fastclick';
-import title from './js/stores/title';
+import seo from './js/stores/seo';
 
 let appHistory = useRouterHistory(createHashHistory)({ queryKey: false, basename: '/!' });
 
@@ -20,9 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
   } );
 
   Router.prototype.componentDidMount =
-  Router.prototype.componentDidUpdate = function() {
-    document.title = title(this.state);
-  };
+  Router.prototype.componentDidUpdate = seo;
 
   ReactDOM.render(
       <Router history={appHistory}>
