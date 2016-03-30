@@ -10,11 +10,15 @@ class AuctionItem extends React.Component {
       eur: '€',
       usd: '$'
     };
-    this.init();
+    this.state = {};
   }
 
-  init() {
-    var sum = this.props.data.sum;
+  componentWillMount() {
+    this.init( this.props );
+  }
+
+  init(props) {
+    var sum = props.data.sum;
     var postfix;
 
     if ( sum >= 1000000 ) {
@@ -27,13 +31,15 @@ class AuctionItem extends React.Component {
       postfix = <sup>тыс.</sup>;
     }
 
-    this.postfix = postfix;
-    this.sum = sum;
-    this.currency = this.currencies[this.props.currency];
+    this.state = {
+      postfix: postfix,
+      sum: sum,
+      currency: this.currencies[this.props.currency]
+    };
   }
 
-  componentWillReceiveProps() {
-    this.init();
+  componentWillReceiveProps( nextProps ) {
+    this.init( nextProps );
   }
 
   getPhone(event) {
@@ -64,7 +70,7 @@ class AuctionItem extends React.Component {
         <span className="auction__time">{this.props.data.time}</span>
         <span className="auction__rate">{this.props.data.rate}</span>
         <div className="auction__sum">
-          <strong className="auction__sum-value">{this.sum}{this.postfix}{this.currency}</strong>
+          <strong className="auction__sum-value">{this.state.sum}{this.state.postfix}{this.state.currency}</strong>
           <span className="auction__price">{Math.round(this.props.data.sum * this.props.data.rate)}грн</span>
         </div>
         <a className="auction__call" onClick={this.getPhone.bind(this)}><i className="icon-phone"></i>{this.props.data.phone.number}</a>

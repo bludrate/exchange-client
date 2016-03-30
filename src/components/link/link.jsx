@@ -6,7 +6,7 @@ class GaLink extends React.Component {
     super(props);
   }
 
-  processClick() {
+  processClick(event) {
     ga('send', 'event', 'Navigation', location.hash, this.props.source);
   }
 

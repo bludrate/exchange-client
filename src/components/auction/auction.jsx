@@ -42,22 +42,23 @@ class Auction extends React.Component {
     }
 
     sortData(list) {
-        var sortData = this.state.sort;
+        var sortHead = this.state.sort.head;
+        var sortValue = this.state.sort.value;
 
-        if (!sortData.head) {
+        if (!sortHead) {
             return list;
         }
 
-        if (sortData.head === 'time') {
-            if (sortData.value) {
+        if (sortHead === 'time') {
+            if (!sortValue) {
                 list.reverse();
             }
         } else {
             list.sort(function(a, b) {
-                if (sortData.value) {
-                    return b[sortData.head] - a[sortData.head];
+                if (sortValue) {
+                    return b[sortHead] - a[sortHead];
                 } else {
-                    return a[sortData.head] - b[sortData.head];
+                    return a[sortHead] - b[sortHead];
                 }
             });
         }
@@ -68,7 +69,7 @@ class Auction extends React.Component {
     renderItems() {
         var list = AuctionStore.getData().slice();
         if (!list.length) {
-            return <div>'loading or empty'</div>;
+            return <div>...</div>;
         }
 
         return this.sortData(list).map((item, index) => <AuctionItem currency={this.props.params.currency} key={index} data={item}/>)
