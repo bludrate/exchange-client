@@ -17,7 +17,7 @@ class Header extends React.Component {
 
   render() {
     return <div className="header tabs">
-      <Link to="/" className="logo" source="logo"><i className="logo__ico">₴</i>валютная биржа</Link>
+      <h1><Link to="/" className="logo" source="logo"><i className="logo__ico">₴</i>валютная биржа</Link></h1>
     </div>;
   }
   /*<i className="logo__arrows">⇅</i>*/
